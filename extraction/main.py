@@ -23,8 +23,6 @@ def initialize_minio_client():
 
     return client
 
-#test to connect to my github repository
-
 def generate_file_name():
     now = datetime.now()
     year = now.year
