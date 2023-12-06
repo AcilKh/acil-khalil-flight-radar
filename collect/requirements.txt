@@ -1,0 +1,5 @@
+pyspark==3.5.0
+minio==7.1.17
+tabulate==0.9.0
+pandas==2.0.3
+ipython==8.16.0
