@@ -51,14 +51,11 @@ L'API FlightRadar24 comporte de nombreux vols avec des informations manqantes. D
 ma couche Bronze. En effet, il y a eu un processus de data cleaning en amont. Cela m'a permis de récupérer les vols ayant des informations complètes.
 Pour ce faire, j'ai notamment fait le lien avec les données de types détails également fourni par l'API.
 Ces données donnent des informations sur la compagnie ou encore les durées de vols nécessaires pour répondre aux questions.
-docker run -p 9000:9000 -p 9001:9001 -e MINIO_ACCESS_KEY=acil -e MINIO_SECRET_KEY=acil1234 minio/minio server /data --console-address ":9001"
-port_hôte:port_conteneur
 
 ## Cheminement
 
-Pour mettre en marche la pipeline et l'ochesrateur Airflow, il faut en premier lieu lancer le conteneur Minio.
-Je le lance avec la commande suivante : docker run -p 9000:9000 -p 9001:9001 -e MINIO_ACCESS_KEY=acil -e MINIO_SECRET_KEY=acil1234 minio/minio server /data --console-address ":9001"
-port_hôte:port_conteneur
+Pour mettre en marche la pipeline et l'ochesrtrateur Airflow, il faut en premier lieu lancer le conteneur Minio.
+Je le lance avec la commande suivante : **docker run -p 9000:9000 -p 9001:9001 -e MINIO_ACCESS_KEY=acil -e MINIO_SECRET_KEY=acil1234 minio/minio server /data --console-address ":9001"**.
 Puis je crée mon bucket "flight-data" directement dans Minio.
 La pipeline est prête, elle peut démarrer !
 
