@@ -12,9 +12,8 @@ RUN apt-get update && \
 # Copy the main into the image
 COPY main.py /main.py
 
-#COPY airlines.json /opt/spark/work-dir/airlines.json
-
-#COPY airports.json /opt/spark/work-dir/airports.json
+COPY airlines.json /opt/spark/work-dir/airlines.json
+COPY airports.json /opt/spark/work-dir/airports.json
 
 ARG CURRENT_IP
 

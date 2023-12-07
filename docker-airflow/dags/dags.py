@@ -2,11 +2,9 @@ from datetime import datetime
 from airflow import DAG
 from airflow.providers.ssh.operators.ssh import SSHOperator
 
-
 with DAG(dag_id="kataflight",
-         start_date=datetime(2023, 12, 6),
+         start_date=datetime(2023, 12, 7),
          schedule_interval="0 */2 * * *") as dag:
-
 
     extract_task = SSHOperator(
         task_id="extract",
@@ -32,7 +30,6 @@ with DAG(dag_id="kataflight",
         dag=dag
     )
 
-
     # Définir les dépendances entre les tâches
     extract_task >> transform_task >> collect_task
 
@@ -51,7 +48,6 @@ with DAG(dag_id="kataflight",
         """,
         dag=dag
     )
-
 
     # Définir les dépendances entre les tâches
     extract_task >> transform_task >> collect_task >> cleanup
