@@ -38,13 +38,13 @@ with DAG(dag_id="kataflight",
         ssh_conn_id='acil-ssh',
         command="""
             # Cleanup all containers
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-extractor-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-transformer-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-collector-container || true
+            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-extract-container || true
+            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-transform-container || true
+            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-collect-container || true
 
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-extractor-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-transformer-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-collector-container || true
+            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-extract-container || true
+            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-transform-container || true
+            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-collect-container || true
         """,
         dag=dag
     )
