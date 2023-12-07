@@ -30,22 +30,33 @@ with DAG(dag_id="kataflight",
         dag=dag
     )
 
-    # Définir les dépendances entre les tâches
-    extract_task >> transform_task >> collect_task
-
     cleanup = SSHOperator(
         task_id="cleanup",
         ssh_conn_id='acil-ssh',
         command="""
-            # Cleanup all containers
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-extract-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-transform-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" stop flight-collect-container || true
+                # Function to wait for a container to exit
+                wait_for_exit() {
+                    local container_name=$1
+                    until "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" ps -a --filter "name=${container_name}" --filter "status=exited" | grep "${container_name}"; do
+                        echo "Waiting for ${container_name} to exit..."
+                        sleep 5
+                    done
+                }
 
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-extract-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-transform-container || true
-            '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-collect-container || true
-        """,
+                # Wait for both containers to exit
+                wait_for_exit flight-extractor-container
+                wait_for_exit flight-transformer-container
+                wait_for_exit flight-analyse-container
+                
+                sleep 10
+
+
+                # Remove the containers
+                "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-extractor-container
+                "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-transformer-container
+                "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" rm flight-analyse-container
+            """,
+        cmd_timeout=600,
         dag=dag
     )
 
